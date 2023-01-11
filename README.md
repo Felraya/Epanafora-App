@@ -6,10 +6,6 @@ Web app pour simplifier le calcul de dégats dans le jdr Epanaphora
 
 Lance les dés pour tous les joueurs et tous les mobs, détermine l'ordre en classant par ordre croissant les joueurs
 
-## Calcul attaque réussite
-
-
-
 ## Attaque
 
 [TYPE_ATTAQUE]  
@@ -20,7 +16,7 @@ Lance les dés pour tous les joueurs et tous les mobs, détermine l'ordre en cla
 [CHANCE_COUP_CRIT_ARME]  
 
 
-### 2) Attaque réussi ou non
+### 1) Attaque réussi ou non
 
 CHANCE_ECHEC_CRIT_BASE = 5%
 
