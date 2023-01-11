@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import '@ui5/webcomponents/dist/Button.js';
 
 @customElement('epanafora-calculateur')
 export class EpanaforaCalculateur extends LitElement {
@@ -9,7 +10,7 @@ export class EpanaforaCalculateur extends LitElement {
     .form {
       display: flex;
       flex-direction: column;
-      width: fit-content;
+      width: min-content;
     }
   `;
 
@@ -24,6 +25,14 @@ export class EpanaforaCalculateur extends LitElement {
         <span>Np de l'arme</span>
         <span>Saisir votre physique</span>
         <button>Valider</button>
+
+        <ui5-button design="Default">Default</ui5-button>
+        <ui5-button disabled>Disabled</ui5-button>
+        <ui5-button design="Transparent">Cancel</ui5-button>
+        <ui5-button design="Positive">Approve</ui5-button>
+        <ui5-button design="Negative">Decline</ui5-button>
+        <ui5-button design="Attention">Warning</ui5-button>
+        <ui5-button design="Emphasized">Subscribe</ui5-button>
       </div>
     `;
   }

@@ -15,6 +15,7 @@
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\""
   },
   "dependencies": {
+    "@ui5/webcomponents": "^1.9.3",
     "lit": "^2.0.2"
   },
   "devDependencies": {
