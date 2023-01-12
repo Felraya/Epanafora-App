@@ -1,8 +1,8 @@
 {
-  "name": "epanafora-calculateur",
-  "description": "Webcomponent epanafora-calculateur following open-wc recommendations",
+  "name": "epanafora-app",
+  "description": "Webcomponent epanafora-app following open-wc recommendations",
   "license": "MIT",
-  "author": "epanafora-calculateur",
+  "author": "epanafora-app",
   "version": "0.0.0",
   "scripts": {
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",

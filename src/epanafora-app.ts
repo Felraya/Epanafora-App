@@ -2,8 +2,8 @@ import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
 import '@ui5/webcomponents/dist/Button.js';
 
-@customElement('epanafora-calculateur')
-export class EpanaforaCalculateur extends LitElement {
+@customElement('epanafora-app')
+export class EpanaforaApp extends LitElement {
   static styles = css`
     :host {
     }

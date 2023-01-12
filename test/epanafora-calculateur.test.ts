@@ -1,14 +1,12 @@
 import { html } from 'lit';
 import { fixture, expect } from '@open-wc/testing';
 
-import { EpanaforaCalculateur } from '../src/epanafora-calculateur.js';
+import { EpanaforaApp } from '../src/epanafora-app.js';
 
-describe('EpanaforaCalculateur', () => {
-  let element: EpanaforaCalculateur;
+describe('EpanaforaApp', () => {
+  let element: EpanaforaApp;
   beforeEach(async () => {
-    element = await fixture(
-      html`<epanafora-calculateur></epanafora-calculateur>`
-    );
+    element = await fixture(html`<epanafora-app></epanafora-app>`);
   });
 
   it('renders a h1', () => {
