@@ -1,16 +1,24 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import './calcul-degat.js';
+import './ordre-tour.js';
 import '@ui5/webcomponents/dist/Button.js';
+import '@ui5/webcomponents/dist/TabContainer.js';
+import '@ui5/webcomponents/dist/Tab.js';
 
 @customElement('epanafora-app')
 export class EpanaforaApp extends LitElement {
   static styles = css`
     :host {
     }
-    .form {
-      display: flex;
-      flex-direction: column;
-      width: min-content;
+    ui5-tabcontainer {
+      --_ui5_tc_headeritem_text_font_weight: bold;
+      --sapFontSize: 16px;
+    }
+    ui5-tabcontainer::part(content) {
+      background-color: white;
+      height: 100%;
+      --_ui5_tc_content_border_bottom: 0;
     }
   `;
 
@@ -18,22 +26,12 @@ export class EpanaforaApp extends LitElement {
 
   render() {
     return html`
-      <div class="form">
-        <span>Physique (dés) - combobox</span>
-        <span>Sans pouvoir / Arme / Pouvoir / Arme + Pouvoir - select</span>
-        <span>Tier du sort - select</span>
-        <span>Np de l'arme</span>
-        <span>Saisir votre physique</span>
-        <button>Valider</button>
-
-        <ui5-button design="Default">Default</ui5-button>
-        <ui5-button disabled>Disabled</ui5-button>
-        <ui5-button design="Transparent">Cancel</ui5-button>
-        <ui5-button design="Positive">Approve</ui5-button>
-        <ui5-button design="Negative">Decline</ui5-button>
-        <ui5-button design="Attention">Warning</ui5-button>
-        <ui5-button design="Emphasized">Subscribe</ui5-button>
-      </div>
+      <ui5-tabcontainer class="full-width">
+        <ui5-tab text="Calcul de Dégat">
+          <calcul-degat></calcul-degat>
+        </ui5-tab>
+        <ui5-tab text="Tirage ordre tour"> <ordre-tour></ordre-tour> </ui5-tab>
+      </ui5-tabcontainer>
     `;
   }
 }
