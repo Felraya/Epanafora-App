@@ -1,4 +1,55 @@
-// 4d20 => nbDice = 4 ; valueDice = 20;
-export function diceRoll(nbDice: number, valueDice: number): number {
-  return nbDice * valueDice;
+export class Dice {
+  nbDice: number;
+
+  valueDice: number;
+
+  average: number;
+
+  constructor(nbDice: number, valueDice: number) {
+    this.nbDice = nbDice;
+    this.valueDice = valueDice;
+
+    this.average = this.calculAverage();
+  }
+
+  roll(): number {
+    let somme = 0;
+    for (let i = 0; i < this.nbDice; i += 1) {
+      somme += this.rollExplosion();
+    }
+    return somme;
+  }
+
+  private rollExplosion(): number {
+    const min = 1;
+    const max = this.valueDice;
+    let somme = 0;
+    let explose: boolean = true;
+
+    while (explose) {
+      const randomNumber = min + Math.random() * (max - min + 1);
+      somme += randomNumber;
+      if (randomNumber === max) {
+        explose = true;
+      } else {
+        explose = false;
+      }
+    }
+    return somme;
+  }
+
+  private calculAverage(): number {
+    const nbTirage = 10000;
+    let somme = 0;
+
+    for (let i = 0; i < nbTirage; i += 1) {
+      somme += +this.roll();
+    }
+    const average = somme / nbTirage;
+    return average;
+  }
+
+  toString(): string {
+    return `${this.nbDice}D${this!.valueDice}`;
+  }
 }
