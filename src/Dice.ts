@@ -3,7 +3,7 @@ export class Dice {
 
   valueDice: number;
 
-  average: number;
+  readonly average: number;
 
   constructor(nbDice: number, valueDice: number) {
     this.nbDice = nbDice;
@@ -27,7 +27,7 @@ export class Dice {
     let explose: boolean = true;
 
     while (explose) {
-      const randomNumber = min + Math.random() * (max - min + 1);
+      const randomNumber = min + Math.floor(Math.random() * max);
       somme += randomNumber;
       if (randomNumber === max) {
         explose = true;
@@ -35,6 +35,7 @@ export class Dice {
         explose = false;
       }
     }
+    // console.log('roll explosion :', somme);
     return somme;
   }
 

@@ -1,4 +1,4 @@
-export const dicestats = [
+export const diceListe = [
   { rankPoints: 0, rank: 0, dice: '1D4' },
   { rankPoints: 5, rank: 1, dice: '1D4' },
   { rankPoints: 10, rank: 2, dice: '1D6' },
@@ -18,7 +18,7 @@ export const dicestats = [
   { rankPoints: 80, rank: 16, dice: '3D8' },
   { rankPoints: 85, rank: 17, dice: '2D14' },
   { rankPoints: 90, rank: 18, dice: '3D10' },
-  { rankPoints: 95, rank: 19, ice: '2D18' },
+  { rankPoints: 95, rank: 19, dice: '2D18' },
   { rankPoints: 100, rank: 20, dice: '2D20' },
   { rankPoints: 105, rank: 21, dice: '3D14' },
   { rankPoints: 110, rank: 22, dice: '3D16' },
@@ -39,3 +39,12 @@ export const dicestats = [
   { rankPoints: 185, rank: 37, dice: '6D36' },
   { rankPoints: 190, rank: 38, dice: '6D40' },
 ];
+
+export const degatArme = [
+  90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165,
+  170, 175, 180, 185, 190, 200,
+];
+
+export const txCritArme = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
+export const tierSort = [1, 2, 3, 4, 5];
