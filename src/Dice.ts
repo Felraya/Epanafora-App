@@ -20,6 +20,21 @@ export class Dice {
     return somme;
   }
 
+  static buildFromString(str: string): Dice {
+    const regex = /[0-9]*D[0-9]*/;
+
+    if (!str.match(regex)) {
+      throw new Error('le dé ne match pas');
+    }
+    const searchTerm = 'D';
+    const indexOfFirst = str.indexOf(searchTerm);
+
+    const nbDiceTmp = +str.substring(0, indexOfFirst);
+    const valueDiceTmp = +str.substring(indexOfFirst + 1, str.length);
+
+    return new Dice(nbDiceTmp, valueDiceTmp);
+  }
+
   private rollExplosion(): number {
     const min = 1;
     const max = this.valueDice;
