@@ -24,7 +24,7 @@ export class Dice {
     const regex = /[0-9]*D[0-9]*/;
 
     if (!str.match(regex)) {
-      throw new Error('le dé ne match pas');
+      throw new Error('Format dé incorrect !!!');
     }
     const searchTerm = 'D';
     const indexOfFirst = str.indexOf(searchTerm);

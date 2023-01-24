@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { property, customElement, query } from 'lit/decorators.js';
+import { state, customElement, query } from 'lit/decorators.js';
 import '@ui5/webcomponents/dist/Button.js';
 import '@ui5/webcomponents/dist/Input.js';
 import '@ui5/webcomponents/dist/ComboBox.js';
@@ -94,7 +94,7 @@ export class CalculDegat extends LitElement {
     }
   `;
 
-  @property({ type: String }) header = 'My app';
+  @state() crit: boolean = false;
 
   @query('#toucheRes') toucheRes!: HTMLDivElement;
 
@@ -106,13 +106,13 @@ export class CalculDegat extends LitElement {
 
   @query('#joueurDeEnergie') joueurDeEnergie!: HTMLInputElement;
 
-  @query('#joueurTypeAttaque') joueurTypeAttaque!: HTMLInputElement;
+  @query('#joueurTypeAttaque') joueurTypeAttaque!: any;
 
-  @query('#joueurTierPouvoir') joueurTierPouvoir!: HTMLInputElement;
+  @query('#joueurTierPouvoir') joueurTierPouvoir!: any;
 
-  @query('#joueurDegatsArme') joueurDegatsArme!: HTMLInputElement;
+  @query('#joueurDegatsArme') joueurDegatsArme!: any;
 
-  @query('#joueurCritsArme') joueurCritsArme!: HTMLInputElement;
+  @query('#joueurCritsArme') joueurCritsArme!: any;
 
   @query('#ennemiDePysique') ennemiDePysique!: HTMLInputElement;
 
@@ -120,22 +120,13 @@ export class CalculDegat extends LitElement {
 
   private static CHANCE_ECHEC_POUVOIR_BASE: number = 0.05;
 
-  private static CHANCE_COUP_CRIT_BASE: number = 0.05;
-
-  firstUpdated() {
-    Dice.buildFromString('4D18');
-    Dice.buildFromString('55D333');
-    Dice.buildFromString('2D8');
-    Dice.buildFromString('752D24');
-  }
+  private static CHANCE_COUP_CRIT_BASE: number = 0.5;
 
   isArme(): boolean {
-    const joueurTypeAttaque: any =
-      this.shadowRoot?.querySelector('#joueurTypeAttaque');
-    if (!joueurTypeAttaque) {
+    if (!this.joueurTypeAttaque) {
       return true;
     }
-    const type = (joueurTypeAttaque.selectedOption as any).innerHTML;
+    const type = (this.joueurTypeAttaque.selectedOption as any).innerText;
     if (type === 'Arme' || type === 'Symbiose') {
       return false;
     }
@@ -143,12 +134,10 @@ export class CalculDegat extends LitElement {
   }
 
   isPouvoir() {
-    const joueurTypeAttaque: any =
-      this.shadowRoot?.querySelector('#joueurTypeAttaque');
-    if (!joueurTypeAttaque) {
+    if (!this.joueurTypeAttaque) {
       return true;
     }
-    const type = (joueurTypeAttaque.selectedOption as any).innerHTML;
+    const type = (this.joueurTypeAttaque.selectedOption as any).innerText;
     if (type === 'Pouvoir' || type === 'Symbiose') {
       return false;
     }
@@ -170,18 +159,174 @@ export class CalculDegat extends LitElement {
     } else {
       res = 'Loupé';
     }
-    this.toucheRes.innerHTML = `${res}`;
+    this.toucheRes.innerText = `${res}`;
+  }
+
+  static isCrit(chanceCrit: number): boolean {
+    if (Math.random() < chanceCrit) {
+      return true;
+    }
+    return false;
+  }
+
+  static percentToNumber(percent: string): number {
+    const regex = /[0-9]*%/;
+    if (!percent.match(regex)) {
+      console.error('Format pourcentage incorrect !!!');
+    }
+    const percentNumber = +percent.substring(0, percent.length - 1);
+    return percentNumber / 100;
   }
 
   calculDegat() {
-    const res = 100;
+    const type = this.joueurTypeAttaque.selectedOption.innerText;
 
-    this.degatRes.innerHTML = `${res}`;
+    let damage: number = 0;
+
+    switch (type) {
+      case 'Sans arme': {
+        // DE
+        const dicePhysiqueJoueur = Dice.buildFromString(
+          this.joueurDePysique.value
+        );
+
+        // DAMAGE
+        damage = dicePhysiqueJoueur.roll() * 0.5;
+
+        // CRIT
+        if (CalculDegat.isCrit(CalculDegat.CHANCE_COUP_CRIT_BASE)) {
+          damage *= 2;
+          this.crit = true;
+        } else {
+          this.crit = false;
+        }
+
+        damage = Math.ceil(damage);
+        break;
+      }
+
+      case 'Arme': {
+        // DE
+        const dicePhysiqueJoueur = Dice.buildFromString(
+          this.joueurDePysique.value
+        );
+
+        // DAMAGE
+        damage =
+          dicePhysiqueJoueur.roll() *
+          CalculDegat.percentToNumber(
+            this.joueurDegatsArme.selectedOption.innerText
+          );
+
+        // CRIT
+        const chanceCrit =
+          CalculDegat.CHANCE_COUP_CRIT_BASE +
+          CalculDegat.percentToNumber(
+            this.joueurCritsArme.selectedOption.innerText
+          );
+        if (CalculDegat.isCrit(chanceCrit)) {
+          damage *= 2;
+          this.crit = true;
+        } else {
+          this.crit = false;
+        }
+
+        damage = Math.ceil(damage);
+        break;
+      }
+
+      case 'Pouvoir': {
+        // ECHEC
+        if (CalculDegat.isCrit(CalculDegat.CHANCE_ECHEC_POUVOIR_BASE)) {
+          damage = 0;
+          break;
+        }
+
+        // DE
+        const dicePhysiqueJoueur = Dice.buildFromString(
+          this.joueurDePysique.value
+        );
+        const diceEnergieJoueur = Dice.buildFromString(
+          this.joueurDeEnergie.value
+        );
+        const tier: number = +this.joueurTierPouvoir.selectedOption.innerText;
+
+        // DAMAGE
+        damage =
+          dicePhysiqueJoueur.roll() + diceEnergieJoueur.roll() * 0.5 * tier;
+
+        // CRIT
+        const chanceCrit = CalculDegat.CHANCE_COUP_CRIT_BASE + tier * 0.1;
+        if (CalculDegat.isCrit(chanceCrit)) {
+          damage *= 2;
+          this.crit = true;
+        } else {
+          this.crit = false;
+        }
+
+        damage = Math.ceil(damage);
+        break;
+      }
+
+      case 'Symbiose': {
+        // ECHEC
+        if (CalculDegat.isCrit(CalculDegat.CHANCE_ECHEC_POUVOIR_BASE)) {
+          damage = 0;
+          break;
+        }
+
+        // DE
+        const dicePhysiqueJoueur = Dice.buildFromString(
+          this.joueurDePysique.value
+        );
+        const diceEnergieJoueur = Dice.buildFromString(
+          this.joueurDeEnergie.value
+        );
+        const tier: number = +this.joueurTierPouvoir.selectedOption.innerText;
+
+        // DAMAGE
+        damage =
+          dicePhysiqueJoueur.roll() *
+            CalculDegat.percentToNumber(
+              this.joueurDegatsArme.selectedOption.innerText
+            ) +
+          diceEnergieJoueur.roll() * 0.5 * tier;
+
+        // CRIT
+        const chanceCrit =
+          CalculDegat.CHANCE_COUP_CRIT_BASE +
+          tier * 0.1 +
+          CalculDegat.percentToNumber(
+            this.joueurCritsArme.selectedOption.innerText
+          );
+        if (CalculDegat.isCrit(chanceCrit)) {
+          damage *= 2;
+          this.crit = true;
+        } else {
+          this.crit = false;
+        }
+
+        damage = Math.ceil(damage);
+        break;
+      }
+
+      default:
+        console.error('Type de pouvoir inconnue');
+    }
+
+    this.degatRes.innerText = `${damage}`;
+    if (this.crit) {
+      this.degatRes.style.color = '#ad3010';
+    } else {
+      this.degatRes.style.color = '';
+    }
   }
 
   reset() {
     this.toucheRes.innerText = '';
     this.degatRes.innerText = '0';
+    this.crit = false;
+    this.degatRes.style.color = '';
   }
 
   render() {
