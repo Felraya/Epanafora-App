@@ -156,8 +156,20 @@ export class CalculDegat extends LitElement {
   }
 
   calculTouche() {
-    const res = 'Touché';
+    const dicePhysiqueJoueur = Dice.buildFromString(this.joueurDePysique.value);
+    const diceInstinctEnnemie = Dice.buildFromString(
+      this.ennemiDeInstinct.value
+    );
 
+    const playerAmount: number = dicePhysiqueJoueur.roll();
+    const ennemieAmount: number = diceInstinctEnnemie.roll();
+
+    let res: string;
+    if (playerAmount >= ennemieAmount) {
+      res = 'Touché';
+    } else {
+      res = 'Loupé';
+    }
     this.toucheRes.innerHTML = `${res}`;
   }
 
