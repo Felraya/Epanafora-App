@@ -100,6 +100,24 @@ export class CalculDegat extends LitElement {
 
   @query('#degatRes') degatRes!: HTMLDivElement;
 
+  @query('#joueurDePysique') joueurDePysique!: HTMLInputElement;
+
+  @query('#joueurDeInstinct') joueurDeInstinct!: HTMLInputElement;
+
+  @query('#joueurDeEnergie') joueurDeEnergie!: HTMLInputElement;
+
+  @query('#joueurTypeAttaque') joueurTypeAttaque!: HTMLInputElement;
+
+  @query('#joueurTierPouvoir') joueurTierPouvoir!: HTMLInputElement;
+
+  @query('#joueurDegatsArme') joueurDegatsArme!: HTMLInputElement;
+
+  @query('#joueurCritsArme') joueurCritsArme!: HTMLInputElement;
+
+  @query('#ennemiDePysique') ennemiDePysique!: HTMLInputElement;
+
+  @query('#ennemiDeInstinct') ennemiDeInstinct!: HTMLInputElement;
+
   private static CHANCE_ECHEC_POUVOIR_BASE: number = 0.05;
 
   private static CHANCE_COUP_CRIT_BASE: number = 0.05;
