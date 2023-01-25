@@ -43,9 +43,22 @@ export class Combat extends LitElement {
     }
     .result {
       display: flex;
-      flex-direction: column;
-      row-gap: 8px;
+      flex-direction: row;
+      column-gap: 32px;
+    }
+    .resultJoueur {
+      display: flex;
+      flex-direction: row;
       justify-content: center;
+      column-gap: 32px;
+      width: 50%;
+    }
+    .resultEnnemie {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      column-gap: 32px;
+      width: 50%;
     }
     .mid {
       height: auto;
@@ -55,34 +68,35 @@ export class Combat extends LitElement {
       justify-content: center;
       row-gap: 16px;
     }
-    .result {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      width: 100%;
-    }
-    #toucheRes,
-    #degatRes {
-      height: 200px;
-      width: 300px;
-      border-radius: 16px;
-      font-size: 56px;
+    .res {
+      height: 128px;
+      width: 200px;
+      border-radius: 24px;
+      font-size: 32px;
       font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: space-around;
       color: #323232;
     }
-    #toucheRes {
-      background-color: #aef18f;
-      border: 2px solid #26bd00;
+    #toucheResJoueur {
+      background-color: #8ff19f;
+      border: 2px solid #00bd2f;
     }
-    #degatRes {
-      background-color: #8faef1;
-      border: 2px solid #002cbd;
+    #degatResJoueur {
+      background-color: #8fc5f1;
+      border: 2px solid #0058bd;
+    }
+    #toucheResEnnemie {
+      background-color: #f1a68f;
+      border: 2px solid #bd2c00;
+    }
+    #degatResEnnemie {
+      background-color: #f1e28f;
+      border: 2px solid #bdaa00;
     }
     .title {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
       color: #323232;
     }
@@ -92,13 +106,38 @@ export class Combat extends LitElement {
       align-items: center;
       row-gap: 8px;
     }
+    ui5-button {
+      width: 150px;
+    }
+    ui5-button#but1 {
+      --sapButton_Emphasized_Background: #00bd2f;
+      --sapButton_Emphasized_BorderColor: #00bd2f;
+      --sapButton_Emphasized_Hover_Background: #00bd2f;
+      --sapButton_Emphasized_Hover_BorderColor: #00bd2f;
+    }
+    ui5-button#but2 {
+      --sapButton_Emphasized_Background: #0058bd;
+      --sapButton_Emphasized_BorderColor: #0058bd;
+    }
+    ui5-button#but3 {
+      --sapButton_Emphasized_Background: #bd2c00;
+      --sapButton_Emphasized_BorderColor: #bd2c00;
+    }
+    ui5-button#but4 {
+      --sapButton_Emphasized_Background: #b0bd00;
+      --sapButton_Emphasized_BorderColor: #b0bd00;
+    }
   `;
 
   @state() crit: boolean = false;
 
-  @query('#toucheRes') toucheRes!: HTMLDivElement;
+  @query('#toucheResJoueur') toucheResJoueur!: HTMLDivElement;
 
-  @query('#degatRes') degatRes!: HTMLDivElement;
+  @query('#degatResJoueur') degatResJoueur!: HTMLDivElement;
+
+  @query('#toucheResEnnemie') toucheResEnnemie!: HTMLDivElement;
+
+  @query('#degatResEnnemie') degatResEnnemie!: HTMLDivElement;
 
   @query('#joueurDePysique') joueurDePysique!: any;
 
@@ -145,7 +184,7 @@ export class Combat extends LitElement {
   }
 
   calculTouche() {
-    const regex = /[0-9]*%/;
+    const regex = /[0-9]*D[0-9]*/;
     let doReturn = false;
     // CHECK FORM
     if (
@@ -181,7 +220,7 @@ export class Combat extends LitElement {
     } else {
       res = 'Loupé';
     }
-    this.toucheRes.innerText = `${res}`;
+    this.toucheResJoueur.innerText = `${res}`;
   }
 
   static isCrit(chanceCrit: number): boolean {
@@ -395,19 +434,19 @@ export class Combat extends LitElement {
         console.error('Type de pouvoir inconnue');
     }
 
-    this.degatRes.innerText = `${damage}`;
+    this.degatResJoueur.innerText = `${damage}`;
     if (this.crit) {
-      this.degatRes.style.color = '#ad3010';
+      this.degatResJoueur.style.color = '#ad3010';
     } else {
-      this.degatRes.style.color = '';
+      this.degatResJoueur.style.color = '';
     }
   }
 
   reset() {
-    this.toucheRes.innerText = '';
-    this.degatRes.innerText = '0';
+    this.toucheResJoueur.innerText = '';
+    this.degatResJoueur.innerText = '0';
     this.crit = false;
-    this.degatRes.style.color = '';
+    this.degatResJoueur.style.color = '';
   }
 
   render() {
@@ -473,16 +512,22 @@ export class Combat extends LitElement {
         </div>
 
         <div class="mid">
-          <ui5-button design="Emphasized" @click=${this.calculTouche}
+          <ui5-button design="Emphasized" id="but1" @click=${this.calculTouche}
             >Attaquer</ui5-button
           >
-          <ui5-button design="Emphasized" @click=${this.Combat}
+          <ui5-button design="Emphasized" id="but2" @click=${this.Combat}
             >Infliger des dégats</ui5-button
           >
-          <ui5-button design="Emphasized" @click=${() => alert('todo')}
+          <ui5-button
+            design="Emphasized"
+            id="but3"
+            @click=${() => alert('todo')}
             >Esquiver</ui5-button
           >
-          <ui5-button design="Emphasized" @click=${() => alert('todo')}
+          <ui5-button
+            design="Emphasized"
+            id="but4"
+            @click=${() => alert('todo')}
             >Subir des dégats</ui5-button
           >
           <ui5-button design="Negative" @click=${this.reset}>Reset</ui5-button>
@@ -508,13 +553,25 @@ export class Combat extends LitElement {
         </div>
       </div>
       <div class="result">
-        <div class="card">
-          <span class="title">Touche</span>
-          <div id="toucheRes"></div>
+        <div class="resultJoueur">
+          <div class="card">
+            <span class="title">Attaque Joueur</span>
+            <div id="toucheResJoueur" class="res"></div>
+          </div>
+          <div class="card">
+            <span class="title">Dégats infligés</span>
+            <div id="degatResJoueur" class="res">0</div>
+          </div>
         </div>
-        <div class="card">
-          <span class="title">Dégats</span>
-          <div id="degatRes">0</div>
+        <div class="resultEnnemie">
+          <div class="card">
+            <span class="title">Attaque ennemie</span>
+            <div id="toucheResEnnemie" class="res"></div>
+          </div>
+          <div class="card">
+            <span class="title">Dégats infligés</span>
+            <div id="degatResEnnemie" class="res">0</div>
+          </div>
         </div>
       </div>
     `;
