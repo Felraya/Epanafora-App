@@ -53,3 +53,4 @@ Attaque en symbiose (arme + pouvoir) :
 
 - Indicateur nb explosion
 - Esquive et subissement de dégat
+- Charly est cringe
