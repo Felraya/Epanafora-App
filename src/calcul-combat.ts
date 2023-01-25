@@ -9,8 +9,8 @@ import '@ui5/webcomponents/dist/Title.js';
 import { diceListe, degatArme, txCritArme } from './data.js';
 import { Dice } from './Dice.js';
 
-@customElement('calcul-degat')
-export class CalculDegat extends LitElement {
+@customElement('calcul-combat')
+export class Combat extends LitElement {
   static styles = css`
     :host {
       display: flex;
@@ -100,11 +100,11 @@ export class CalculDegat extends LitElement {
 
   @query('#degatRes') degatRes!: HTMLDivElement;
 
-  @query('#joueurDePysique') joueurDePysique!: HTMLInputElement;
+  @query('#joueurDePysique') joueurDePysique!: any;
 
-  @query('#joueurDeInstinct') joueurDeInstinct!: HTMLInputElement;
+  @query('#joueurDeInstinct') joueurDeInstinct!: any;
 
-  @query('#joueurDeEnergie') joueurDeEnergie!: HTMLInputElement;
+  @query('#joueurDeEnergie') joueurDeEnergie!: any;
 
   @query('#joueurTypeAttaque') joueurTypeAttaque!: any;
 
@@ -114,13 +114,13 @@ export class CalculDegat extends LitElement {
 
   @query('#joueurCritsArme') joueurCritsArme!: any;
 
-  @query('#ennemiDePysique') ennemiDePysique!: HTMLInputElement;
+  @query('#ennemiDePysique') ennemiDePysique!: any;
 
-  @query('#ennemiDeInstinct') ennemiDeInstinct!: HTMLInputElement;
+  @query('#ennemiDeInstinct') ennemiDeInstinct!: any;
 
   private static CHANCE_ECHEC_POUVOIR_BASE: number = 0.05;
 
-  private static CHANCE_COUP_CRIT_BASE: number = 0.5;
+  private static CHANCE_COUP_CRIT_BASE: number = 0.05;
 
   isArme(): boolean {
     if (!this.joueurTypeAttaque) {
@@ -145,6 +145,28 @@ export class CalculDegat extends LitElement {
   }
 
   calculTouche() {
+    const regex = /[0-9]*%/;
+    let doReturn = false;
+    // CHECK FORM
+    if (
+      this.joueurDePysique.value === '' ||
+      !this.joueurDePysique.value.match(regex)
+    ) {
+      this.joueurDePysique.valueState = 'Error';
+      doReturn = true;
+    }
+    if (
+      this.ennemiDeInstinct.value === '' ||
+      !this.ennemiDeInstinct.value.match(regex)
+    ) {
+      this.ennemiDeInstinct.valueState = 'Error';
+      doReturn = true;
+    }
+    if (doReturn) return;
+    this.joueurDePysique.valueState = 'None';
+    this.ennemiDeInstinct.valueState = 'None';
+
+    // CALCUL
     const dicePhysiqueJoueur = Dice.buildFromString(this.joueurDePysique.value);
     const diceInstinctEnnemie = Dice.buildFromString(
       this.ennemiDeInstinct.value
@@ -178,13 +200,27 @@ export class CalculDegat extends LitElement {
     return percentNumber / 100;
   }
 
-  calculDegat() {
+  Combat() {
+    const regex = /[0-9]*D[0-9]*/;
+    let doReturn = false;
+
     const type = this.joueurTypeAttaque.selectedOption.innerText;
 
-    let damage: number = 0;
+    let damage: number | string = 0;
 
     switch (type) {
       case 'Sans arme': {
+        // CHECK FORM
+        if (
+          this.joueurDePysique.value === '' ||
+          !this.joueurDePysique.value.match(regex)
+        ) {
+          this.joueurDePysique.valueState = 'Error';
+          doReturn = true;
+        }
+        if (doReturn) return;
+        this.joueurDePysique.valueState = 'None';
+
         // DE
         const dicePhysiqueJoueur = Dice.buildFromString(
           this.joueurDePysique.value
@@ -194,7 +230,7 @@ export class CalculDegat extends LitElement {
         damage = dicePhysiqueJoueur.roll() * 0.5;
 
         // CRIT
-        if (CalculDegat.isCrit(CalculDegat.CHANCE_COUP_CRIT_BASE)) {
+        if (Combat.isCrit(Combat.CHANCE_COUP_CRIT_BASE)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -206,6 +242,17 @@ export class CalculDegat extends LitElement {
       }
 
       case 'Arme': {
+        if (
+          this.joueurDePysique.value === '' ||
+          !this.joueurDePysique.value.match(regex)
+        ) {
+          this.joueurDePysique.valueState = 'Error';
+          doReturn = true;
+        }
+
+        if (doReturn) return;
+        this.joueurDePysique.valueState = 'None';
+
         // DE
         const dicePhysiqueJoueur = Dice.buildFromString(
           this.joueurDePysique.value
@@ -214,17 +261,15 @@ export class CalculDegat extends LitElement {
         // DAMAGE
         damage =
           dicePhysiqueJoueur.roll() *
-          CalculDegat.percentToNumber(
+          Combat.percentToNumber(
             this.joueurDegatsArme.selectedOption.innerText
           );
 
         // CRIT
         const chanceCrit =
-          CalculDegat.CHANCE_COUP_CRIT_BASE +
-          CalculDegat.percentToNumber(
-            this.joueurCritsArme.selectedOption.innerText
-          );
-        if (CalculDegat.isCrit(chanceCrit)) {
+          Combat.CHANCE_COUP_CRIT_BASE +
+          Combat.percentToNumber(this.joueurCritsArme.selectedOption.innerText);
+        if (Combat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -236,9 +281,28 @@ export class CalculDegat extends LitElement {
       }
 
       case 'Pouvoir': {
+        // CHECK FORM
+        if (
+          this.joueurDePysique.value === '' ||
+          !this.joueurDePysique.value.match(regex)
+        ) {
+          this.joueurDePysique.valueState = 'Error';
+          doReturn = true;
+        }
+        if (
+          this.joueurDeEnergie.value === '' ||
+          !this.joueurDeEnergie.value.match(regex)
+        ) {
+          this.joueurDeEnergie.valueState = 'Error';
+          doReturn = true;
+        }
+        if (doReturn) return;
+        this.joueurDePysique.valueState = 'None';
+        this.joueurDeEnergie.valueState = 'None';
+
         // ECHEC
-        if (CalculDegat.isCrit(CalculDegat.CHANCE_ECHEC_POUVOIR_BASE)) {
-          damage = 0;
+        if (Combat.isCrit(Combat.CHANCE_ECHEC_POUVOIR_BASE)) {
+          damage = 'Echec crit';
           break;
         }
 
@@ -256,8 +320,8 @@ export class CalculDegat extends LitElement {
           dicePhysiqueJoueur.roll() + diceEnergieJoueur.roll() * 0.5 * tier;
 
         // CRIT
-        const chanceCrit = CalculDegat.CHANCE_COUP_CRIT_BASE + tier * 0.1;
-        if (CalculDegat.isCrit(chanceCrit)) {
+        const chanceCrit = Combat.CHANCE_COUP_CRIT_BASE + tier * 0.1;
+        if (Combat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -269,9 +333,28 @@ export class CalculDegat extends LitElement {
       }
 
       case 'Symbiose': {
+        // CHECK FORM
+        if (
+          this.joueurDePysique.value === '' ||
+          !this.joueurDePysique.value.match(regex)
+        ) {
+          this.joueurDePysique.valueState = 'Error';
+          doReturn = true;
+        }
+        if (
+          this.joueurDeEnergie.value === '' ||
+          !this.joueurDeEnergie.value.match(regex)
+        ) {
+          this.joueurDeEnergie.valueState = 'Error';
+          doReturn = true;
+        }
+        if (doReturn) return;
+        this.joueurDePysique.valueState = 'None';
+        this.joueurDeEnergie.valueState = 'None';
+
         // ECHEC
-        if (CalculDegat.isCrit(CalculDegat.CHANCE_ECHEC_POUVOIR_BASE)) {
-          damage = 0;
+        if (Combat.isCrit(Combat.CHANCE_ECHEC_POUVOIR_BASE)) {
+          damage = 'Echec crit';
           break;
         }
 
@@ -287,19 +370,17 @@ export class CalculDegat extends LitElement {
         // DAMAGE
         damage =
           dicePhysiqueJoueur.roll() *
-            CalculDegat.percentToNumber(
+            Combat.percentToNumber(
               this.joueurDegatsArme.selectedOption.innerText
             ) +
           diceEnergieJoueur.roll() * 0.5 * tier;
 
         // CRIT
         const chanceCrit =
-          CalculDegat.CHANCE_COUP_CRIT_BASE +
+          Combat.CHANCE_COUP_CRIT_BASE +
           tier * 0.1 +
-          CalculDegat.percentToNumber(
-            this.joueurCritsArme.selectedOption.innerText
-          );
-        if (CalculDegat.isCrit(chanceCrit)) {
+          Combat.percentToNumber(this.joueurCritsArme.selectedOption.innerText);
+        if (Combat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -393,10 +474,16 @@ export class CalculDegat extends LitElement {
 
         <div class="mid">
           <ui5-button design="Emphasized" @click=${this.calculTouche}
-            >Attaque touché</ui5-button
+            >Attaquer</ui5-button
           >
-          <ui5-button design="Emphasized" @click=${this.calculDegat}
-            >Dégat</ui5-button
+          <ui5-button design="Emphasized" @click=${this.Combat}
+            >Infliger des dégats</ui5-button
+          >
+          <ui5-button design="Emphasized" @click=${() => alert('todo')}
+            >Esquiver</ui5-button
+          >
+          <ui5-button design="Emphasized" @click=${() => alert('todo')}
+            >Subir des dégats</ui5-button
           >
           <ui5-button design="Negative" @click=${this.reset}>Reset</ui5-button>
         </div>

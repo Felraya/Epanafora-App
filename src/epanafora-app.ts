@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import './calcul-degat.js';
+import './calcul-combat.js';
 import './ordre-tour.js';
 import '@ui5/webcomponents/dist/Button.js';
 import '@ui5/webcomponents/dist/TabContainer.js';
@@ -28,7 +28,7 @@ export class EpanaforaApp extends LitElement {
     return html`
       <ui5-tabcontainer class="full-width">
         <ui5-tab text="Combat">
-          <calcul-degat></calcul-degat>
+          <calcul-combat></calcul-combat>
         </ui5-tab>
         <ui5-tab text="Tirage ordre tour"> <ordre-tour></ordre-tour> </ui5-tab>
       </ui5-tabcontainer>
