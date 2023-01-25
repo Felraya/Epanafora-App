@@ -26,7 +26,7 @@ export class EpanaforaApp extends LitElement {
 
   render() {
     return html`
-      <ui5-tabcontainer class="full-width">
+      <ui5-tabcontainer class="full-width" fixed="true">
         <ui5-tab text="Combat">
           <calcul-combat></calcul-combat>
         </ui5-tab>

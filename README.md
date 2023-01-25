@@ -47,3 +47,9 @@ Attaque en symbiose (arme + pouvoir) :
  - dégat = [DE_PHYSIQUE] * (1 + [DEGAT_ADDITIONEL_ARME]) + (0,5 * [TIER_POUVOIR] * [DE_ENERGIE])
  - chance de crit = [CHANCE_COUP_CRIT_BASE]  + [CHANCE_COUP_CRIT_ARME] + (0,1 * [TIER_POUVOIR])
  - conséquence négatif : l'arme perd 1 NP
+
+
+### TODO
+
+- Indicateur nb explosion
+- Esquive et subissement de dégat
