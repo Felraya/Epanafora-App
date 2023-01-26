@@ -16,6 +16,25 @@ export class Combat extends LitElement {
       display: flex;
       flex-direction: column;
       row-gap: 64px;
+
+      --green-light: #f5fae5;
+      --green: #30914c;
+      --green-dark: #287a40;
+
+      --blue-light: #e1f4ff;
+      --blue: #0070f2;
+      --blue-dark: #0058bf;
+
+      --orange-light: #fff8d6;
+      --orange: #e76500;
+      --orange-dark: #d35c00;
+
+      --red-light: #ffeaf4;
+      --red: #f53232;
+      --red-dark: #d50a0a;
+
+      --grey: #6a6d70;
+      --grey-dark: #515456;
     }
     .body {
       display: flex;
@@ -80,20 +99,20 @@ export class Combat extends LitElement {
       color: #323232;
     }
     #toucheResJoueur {
-      background-color: #8ff19f;
-      border: 2px solid #00bd2f;
+      background-color: var(--green-light);
+      border: 2px solid var(--green);
     }
     #degatResJoueur {
-      background-color: #8fc5f1;
-      border: 2px solid #0058bd;
+      background-color: var(--blue-light);
+      border: 2px solid var(--blue);
     }
     #toucheResEnnemie {
-      background-color: #f1a68f;
-      border: 2px solid #bd2c00;
+      background-color: var(--orange-light);
+      border: 2px solid var(--orange);
     }
     #degatResEnnemie {
-      background-color: #f1e28f;
-      border: 2px solid #bdaa00;
+      background-color: var(--red-light);
+      border: 2px solid var(--red);
     }
     .title {
       font-size: 20px;
@@ -107,25 +126,47 @@ export class Combat extends LitElement {
       row-gap: 8px;
     }
     ui5-button {
-      width: 150px;
+      width: 180px;
     }
     ui5-button#but1 {
-      --sapButton_Emphasized_Background: #00bd2f;
-      --sapButton_Emphasized_BorderColor: #00bd2f;
-      --sapButton_Emphasized_Hover_Background: #00bd2f;
-      --sapButton_Emphasized_Hover_BorderColor: #00bd2f;
+      --sapButton_Emphasized_Background: var(--green);
+      --sapButton_Emphasized_BorderColor: var(--green);
+      --sapButton_Emphasized_Hover_Background: var(--green-dark);
+      --sapButton_Emphasized_Hover_BorderColor: var(--green-dark);
+      --sapButton_Active_Background: var(--green-dark);
+      --sapButton_Active_BorderColor: var(--green-dark);
     }
     ui5-button#but2 {
-      --sapButton_Emphasized_Background: #0058bd;
-      --sapButton_Emphasized_BorderColor: #0058bd;
+      --sapButton_Emphasized_Background: var(--blue);
+      --sapButton_Emphasized_BorderColor: var(--blue);
+      --sapButton_Emphasized_Hover_Background: var(--blue-dark);
+      --sapButton_Emphasized_Hover_BorderColor: var(--blue-dark);
+      --sapButton_Active_Background: var(--blue-dark);
+      --sapButton_Active_BorderColor: var(--blue-dark);
     }
     ui5-button#but3 {
-      --sapButton_Emphasized_Background: #bd2c00;
-      --sapButton_Emphasized_BorderColor: #bd2c00;
+      --sapButton_Emphasized_Background: var(--orange);
+      --sapButton_Emphasized_BorderColor: var(--orange);
+      --sapButton_Emphasized_Hover_Background: var(--orange-dark);
+      --sapButton_Emphasized_Hover_BorderColor: var(--orange-dark);
+      --sapButton_Active_Background: var(--orange-dark);
+      --sapButton_Active_BorderColor: var(--orange-dark);
     }
     ui5-button#but4 {
-      --sapButton_Emphasized_Background: #b0bd00;
-      --sapButton_Emphasized_BorderColor: #b0bd00;
+      --sapButton_Emphasized_Background: var(--red);
+      --sapButton_Emphasized_BorderColor: var(--red);
+      --sapButton_Emphasized_Hover_Background: var(--red-dark);
+      --sapButton_Emphasized_Hover_BorderColor: var(--red-dark);
+      --sapButton_Active_Background: var(--red-dark);
+      --sapButton_Active_BorderColor: var(--red-dark);
+    }
+    ui5-button#but5 {
+      --sapButton_Emphasized_Background: var(--grey);
+      --sapButton_Emphasized_BorderColor: var(--grey);
+      --sapButton_Emphasized_Hover_Background: var(--grey-dark);
+      --sapButton_Emphasized_Hover_BorderColor: var(--grey-dark);
+      --sapButton_Active_Background: var(--grey-dark);
+      --sapButton_Active_BorderColor: var(--grey-dark);
     }
   `;
 
@@ -530,7 +571,9 @@ export class Combat extends LitElement {
             @click=${() => alert('todo')}
             >Subir des dégats</ui5-button
           >
-          <ui5-button design="Negative" @click=${this.reset}>Reset</ui5-button>
+          <ui5-button design="Emphasized" id="but5" @click=${this.reset}
+            >Reset</ui5-button
+          >
         </div>
 
         <div class="ennemi">
