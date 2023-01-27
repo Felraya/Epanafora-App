@@ -13,48 +13,42 @@ Lance les dés pour tous les joueurs et tous les mobs, détermine l'ordre en cla
 [DE_ENERGIE]  
 [DE_INSTINCT_ADVERSAIRE]  
 [TIER_POUVOIR]  
-[CHANCE_COUP_CRIT_ARME]  
-
+[CHANCE_COUP_CRIT_ARME]
 
 ### 1) Attaque réussi ou non
 
 CHANCE_ECHEC_CRIT_BASE = 5%
 
-Uniquement pour attaque pouvoir et attaque en symbiose : 
- - chance d'échec du pouvoir = [CHANCE_ECHEC_CRIT_BASE]
+Uniquement pour attaque pouvoir et attaque en symbiose :
+
+- chance d'échec du pouvoir = [CHANCE_ECHEC_CRIT_BASE]
 
 Pour toutes les types d'attaques :
- - réussi si [DE_PHYSIQUE] >= [DE_INSTINCT_ADVERSAIRE]
- - échec si [DE_PHYSIQUE] < [DE_INSTINCT_ADVERSAIRE]
+
+- réussi si [DE_PHYSIQUE] >= [DE_INSTINCT_ADVERSAIRE]
+- échec si [DE_PHYSIQUE] < [DE_INSTINCT_ADVERSAIRE]
 
 ### 2) Calcul des dégats
 
 CHANCE_COUP_CRIT_BASE = 5%
 
 Attaque sans arme :
- - dégat = [DE_PHYSIQUE] * 0,5
- - chance de crit = [CHANCE_COUP_CRIT_BASE]
+
+- dégat = [DE_PHYSIQUE] \* 0,5
+- chance de crit = [CHANCE_COUP_CRIT_BASE]
 
 Attaque avec arme :
- - dégat = [DE_PHYSIQUE] * [1 + DEGAT_ADDITIONEL_ARME]
- - chance de crit = [CHANCE_COUP_CRIT_BASE] + [CHANCE_COUP_CRIT_ARME]
+
+- dégat = [DE_PHYSIQUE] \* [1 + DEGAT_ADDITIONEL_ARME]
+- chance de crit = [CHANCE_COUP_CRIT_BASE] + [CHANCE_COUP_CRIT_ARME]
 
 Attaque pouvoir :
- - dégat = [DE_PHYSIQUE] + (0,5 * [TIER_POUVOIR] * [DE_ENERGIE])
- - chance de crit = [CHANCE_COUP_CRIT_BASE] + (0,1 * [TIER_POUVOIR])
+
+- dégat = [DE_PHYSIQUE] + (0,5 _ [TIER_POUVOIR] _ [DE_ENERGIE])
+- chance de crit = [CHANCE_COUP_CRIT_BASE] + (0,1 \* [TIER_POUVOIR])
 
 Attaque en symbiose (arme + pouvoir) :
- - dégat = [DE_PHYSIQUE] * (1 + [DEGAT_ADDITIONEL_ARME]) + (0,5 * [TIER_POUVOIR] * [DE_ENERGIE])
- - chance de crit = [CHANCE_COUP_CRIT_BASE]  + [CHANCE_COUP_CRIT_ARME] + (0,1 * [TIER_POUVOIR])
- - conséquence négatif : l'arme perd 1 NP
 
-
-### NEXE
-
-https://github.com/nexe/nexe/issues/799
-
-### PKG
-
-https://www.npmjs.com/package/pkg
-
-https://www.youtube.com/watch?v=0neeoc-DHQ4
+- dégat = [DE_PHYSIQUE] _ (1 + [DEGAT_ADDITIONEL_ARME]) + (0,5 _ [TIER_POUVOIR] \* [DE_ENERGIE])
+- chance de crit = [CHANCE_COUP_CRIT_BASE] + [CHANCE_COUP_CRIT_ARME] + (0,1 \* [TIER_POUVOIR])
+- conséquence négatif : l'arme perd 1 NP

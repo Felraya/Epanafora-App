@@ -571,8 +571,8 @@ export class CalculCombat extends LitElement {
     this.toucheResJoueur.innerText = '';
     this.degatResJoueur.innerText = '0';
     this.crit = false;
-    this.toucheResEnnemie.style.color = '';
-    this.degatResEnnemie.style.color = '0';
+    this.toucheResEnnemie.innerText = '';
+    this.degatResEnnemie.innerText = '0';
   }
 
   render() {
@@ -582,21 +582,21 @@ export class CalculCombat extends LitElement {
           <ui5-title level="H2">Joueur</ui5-title>
           <div class="form">
             <ui5-label>Dé Physique</ui5-label>
-            <ui5-combobox placeholder="2D4" id="joueurDePysique">
+            <ui5-combobox placeholder="2D4" id="joueurDePysique" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Instinct</ui5-label>
-            <ui5-combobox placeholder="2D4" id="joueurDeInstinct">
+            <ui5-combobox placeholder="2D4" id="joueurDeInstinct" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Energie</ui5-label>
-            <ui5-combobox placeholder="2D4" id="joueurDeEnergie">
+            <ui5-combobox placeholder="2D4" id="joueurDeEnergie" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
               )}
@@ -670,14 +670,14 @@ export class CalculCombat extends LitElement {
           <ui5-title level="H2">Ennemi</ui5-title>
           <div class="form">
             <ui5-label>Dé Physique</ui5-label>
-            <ui5-combobox placeholder="2D4" id="ennemiDePysique">
+            <ui5-combobox placeholder="2D4" id="ennemiDePysique" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Instinct</ui5-label>
-            <ui5-combobox placeholder="2D4" id="ennemiDeInstinct">
+            <ui5-combobox placeholder="2D4" id="ennemiDeInstinct" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
               )}

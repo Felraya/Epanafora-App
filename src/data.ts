@@ -1,9 +1,6 @@
 export const diceListe = [
-  { rankPoints: 0, rank: 0, dice: '1D4' },
   { rankPoints: 5, rank: 1, dice: '1D4' },
-  { rankPoints: 10, rank: 2, dice: '1D6' },
   { rankPoints: 15, rank: 3, dice: '1D6' },
-  { rankPoints: 20, rank: 4, dice: '1D8' },
   { rankPoints: 25, rank: 5, dice: '1D8' },
   { rankPoints: 30, rank: 6, dice: '1D10' },
   { rankPoints: 35, rank: 7, dice: '2D4' },
