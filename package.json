@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ui5/webcomponents": "^1.9.3",
+    "esbuild": "^0.17.4",
     "lit": "^2.0.2"
   },
   "devDependencies": {

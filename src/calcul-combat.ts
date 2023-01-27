@@ -10,7 +10,7 @@ import { diceListe, degatArme, txCritArme } from './data.js';
 import { Dice } from './Dice.js';
 
 @customElement('calcul-combat')
-export class Combat extends LitElement {
+export class CalculCombat extends LitElement {
   static styles = css`
     :host {
       display: flex;
@@ -224,7 +224,7 @@ export class Combat extends LitElement {
     return true;
   }
 
-  calculTouche() {
+  calculToucheJoueur() {
     const regex = /[0-9]*D[0-9]*/;
     let doReturn = false;
     // CHECK FORM
@@ -252,11 +252,11 @@ export class Combat extends LitElement {
       this.ennemiDeInstinct.value
     );
 
-    const playerAmount: number = dicePhysiqueJoueur.roll();
+    const joueurAmount: number = dicePhysiqueJoueur.roll();
     const ennemieAmount: number = diceInstinctEnnemie.roll();
 
     let res: string;
-    if (playerAmount >= ennemieAmount) {
+    if (joueurAmount >= ennemieAmount) {
       res = 'Touché';
     } else {
       res = 'Loupé';
@@ -280,7 +280,7 @@ export class Combat extends LitElement {
     return percentNumber / 100;
   }
 
-  Combat() {
+  calculDegatJoueur() {
     const regex = /[0-9]*D[0-9]*/;
     let doReturn = false;
 
@@ -310,7 +310,7 @@ export class Combat extends LitElement {
         damage = dicePhysiqueJoueur.roll() * 0.5;
 
         // CRIT
-        if (Combat.isCrit(Combat.CHANCE_COUP_CRIT_BASE)) {
+        if (CalculCombat.isCrit(CalculCombat.CHANCE_COUP_CRIT_BASE)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -341,15 +341,17 @@ export class Combat extends LitElement {
         // DAMAGE
         damage =
           dicePhysiqueJoueur.roll() *
-          Combat.percentToNumber(
+          CalculCombat.percentToNumber(
             this.joueurDegatsArme.selectedOption.innerText
           );
 
         // CRIT
         const chanceCrit =
-          Combat.CHANCE_COUP_CRIT_BASE +
-          Combat.percentToNumber(this.joueurCritsArme.selectedOption.innerText);
-        if (Combat.isCrit(chanceCrit)) {
+          CalculCombat.CHANCE_COUP_CRIT_BASE +
+          CalculCombat.percentToNumber(
+            this.joueurCritsArme.selectedOption.innerText
+          );
+        if (CalculCombat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -381,7 +383,7 @@ export class Combat extends LitElement {
         this.joueurDeEnergie.valueState = 'None';
 
         // ECHEC
-        if (Combat.isCrit(Combat.CHANCE_ECHEC_POUVOIR_BASE)) {
+        if (CalculCombat.isCrit(CalculCombat.CHANCE_ECHEC_POUVOIR_BASE)) {
           damage = 'Echec crit';
           break;
         }
@@ -400,8 +402,8 @@ export class Combat extends LitElement {
           dicePhysiqueJoueur.roll() + diceEnergieJoueur.roll() * 0.5 * tier;
 
         // CRIT
-        const chanceCrit = Combat.CHANCE_COUP_CRIT_BASE + tier * 0.1;
-        if (Combat.isCrit(chanceCrit)) {
+        const chanceCrit = CalculCombat.CHANCE_COUP_CRIT_BASE + tier * 0.1;
+        if (CalculCombat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -433,7 +435,7 @@ export class Combat extends LitElement {
         this.joueurDeEnergie.valueState = 'None';
 
         // ECHEC
-        if (Combat.isCrit(Combat.CHANCE_ECHEC_POUVOIR_BASE)) {
+        if (CalculCombat.isCrit(CalculCombat.CHANCE_ECHEC_POUVOIR_BASE)) {
           damage = 'Echec crit';
           break;
         }
@@ -450,17 +452,19 @@ export class Combat extends LitElement {
         // DAMAGE
         damage =
           dicePhysiqueJoueur.roll() *
-            Combat.percentToNumber(
+            CalculCombat.percentToNumber(
               this.joueurDegatsArme.selectedOption.innerText
             ) +
           diceEnergieJoueur.roll() * 0.5 * tier;
 
         // CRIT
         const chanceCrit =
-          Combat.CHANCE_COUP_CRIT_BASE +
+          CalculCombat.CHANCE_COUP_CRIT_BASE +
           tier * 0.1 +
-          Combat.percentToNumber(this.joueurCritsArme.selectedOption.innerText);
-        if (Combat.isCrit(chanceCrit)) {
+          CalculCombat.percentToNumber(
+            this.joueurCritsArme.selectedOption.innerText
+          );
+        if (CalculCombat.isCrit(chanceCrit)) {
           damage *= 2;
           this.crit = true;
         } else {
@@ -483,11 +487,92 @@ export class Combat extends LitElement {
     }
   }
 
+  calculToucheEnnemie() {
+    const regex = /[0-9]*D[0-9]*/;
+    let doReturn = false;
+    // CHECK FORM
+    if (
+      this.ennemiDePysique.value === '' ||
+      !this.ennemiDePysique.value.match(regex)
+    ) {
+      this.ennemiDePysique.valueState = 'Error';
+      doReturn = true;
+    }
+    if (
+      this.joueurDeInstinct.value === '' ||
+      !this.joueurDeInstinct.value.match(regex)
+    ) {
+      this.joueurDeInstinct.valueState = 'Error';
+      doReturn = true;
+    }
+    if (doReturn) return;
+    this.ennemiDePysique.valueState = 'None';
+    this.joueurDeInstinct.valueState = 'None';
+
+    // CALCUL
+    const dicePhysiqueEnnemie = Dice.buildFromString(
+      this.ennemiDePysique.value
+    );
+    const diceInstinctJoueur = Dice.buildFromString(
+      this.joueurDeInstinct.value
+    );
+
+    const ennemieAmount: number = dicePhysiqueEnnemie.roll();
+    const joueurAmount: number = diceInstinctJoueur.roll();
+
+    let res: string;
+    if (ennemieAmount >= joueurAmount) {
+      res = 'Touché';
+    } else {
+      res = 'Loupé';
+    }
+    this.toucheResEnnemie.innerText = `${res}`;
+  }
+
+  calculDegatEnnemie() {
+    const regex = /[0-9]*D[0-9]*/;
+    let doReturn = false;
+    if (
+      this.ennemiDePysique.value === '' ||
+      !this.ennemiDePysique.value.match(regex)
+    ) {
+      this.ennemiDePysique.valueState = 'Error';
+      doReturn = true;
+    }
+    if (doReturn) return;
+    this.ennemiDePysique.valueState = 'None';
+
+    // DE
+    const dicePhysiqueEnnemie = Dice.buildFromString(
+      this.ennemiDePysique.value
+    );
+
+    // DAMAGE
+    let damage = dicePhysiqueEnnemie.roll();
+
+    // CRIT
+    if (CalculCombat.isCrit(CalculCombat.CHANCE_COUP_CRIT_BASE)) {
+      damage *= 2;
+      this.crit = true;
+    } else {
+      this.crit = false;
+    }
+
+    damage = Math.ceil(damage);
+    this.degatResEnnemie.innerText = `${damage}`;
+    if (this.crit) {
+      this.degatResEnnemie.style.color = '#ad3010';
+    } else {
+      this.degatResEnnemie.style.color = '';
+    }
+  }
+
   reset() {
     this.toucheResJoueur.innerText = '';
     this.degatResJoueur.innerText = '0';
     this.crit = false;
-    this.degatResJoueur.style.color = '';
+    this.toucheResEnnemie.style.color = '';
+    this.degatResEnnemie.style.color = '0';
   }
 
   render() {
@@ -553,22 +638,28 @@ export class Combat extends LitElement {
         </div>
 
         <div class="mid">
-          <ui5-button design="Emphasized" id="but1" @click=${this.calculTouche}
+          <ui5-button
+            design="Emphasized"
+            id="but1"
+            @click=${this.calculToucheJoueur}
             >Attaquer</ui5-button
           >
-          <ui5-button design="Emphasized" id="but2" @click=${this.Combat}
+          <ui5-button
+            design="Emphasized"
+            id="but2"
+            @click=${this.calculDegatJoueur}
             >Infliger des dégats</ui5-button
           >
           <ui5-button
             design="Emphasized"
             id="but3"
-            @click=${() => alert('todo')}
+            @click=${this.calculToucheEnnemie}
             >Esquiver</ui5-button
           >
           <ui5-button
             design="Emphasized"
             id="but4"
-            @click=${() => alert('todo')}
+            @click=${this.calculDegatEnnemie}
             >Subir des dégats</ui5-button
           >
           <ui5-button design="Emphasized" id="but5" @click=${this.reset}
