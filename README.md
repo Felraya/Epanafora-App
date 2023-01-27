@@ -52,3 +52,9 @@ Attaque en symbiose (arme + pouvoir) :
 ### NEXE
 
 https://github.com/nexe/nexe/issues/799
+
+### PKG
+
+https://www.npmjs.com/package/pkg
+
+https://www.youtube.com/watch?v=0neeoc-DHQ4
