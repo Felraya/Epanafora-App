@@ -49,8 +49,6 @@ Attaque en symbiose (arme + pouvoir) :
  - conséquence négatif : l'arme perd 1 NP
 
 
-### TODO
+### NEXE
 
-- Indicateur nb explosion
-- Esquive et subissement de dégat
-- Charly est cringe
+https://github.com/nexe/nexe/issues/799
