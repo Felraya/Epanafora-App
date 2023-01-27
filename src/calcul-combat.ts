@@ -636,7 +636,6 @@ export class CalculCombat extends LitElement {
             </ui5-select>
           </div>
         </div>
-
         <div class="mid">
           <ui5-button
             design="Emphasized"

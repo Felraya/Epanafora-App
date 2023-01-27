@@ -13,16 +13,12 @@
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "execlean": "rimraf Epanaphora.exe && nexe server.js -r \"dist/**/*\" -o \"./Epanaphora.exe\" -t windows --build --clean",
-    "exebuild": "npm run build && nexe server.js -r \"dist/**/*\" -o \"./Epanaphora.exe\" -t windows --build",
-    "exe": "npm run execlean && npm run exebuild"
+    "pkg": "npm run build && rimraf epanaphora.exe && pkg server.js --target node14-win-x64 --output ephanaphora.exe"
   },
   "dependencies": {
     "@ui5/webcomponents": "^1.9.3",
-    "esbuild": "^0.17.4",
     "lit": "^2.0.2",
-    "live-server": "^1.2.2",
-    "nexe": "^4.0.0-rc.2"
+    "live-server": "^1.2.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
@@ -51,7 +47,9 @@
     "rollup-plugin-esbuild": "^5.0.0",
     "rollup-plugin-workbox": "^6.2.0",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "pkg": "^5.8.0",
+    "esbuild": "^0.17.4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
