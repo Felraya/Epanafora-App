@@ -90,5 +90,8 @@
       "prettier --write"
     ]
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "pkg": {
+    "assets": "dist/**/*"
+  }
 }
