@@ -265,7 +265,9 @@ export class CalculCombat extends LitElement {
   }
 
   static isCrit(chanceCrit: number): boolean {
-    if (Math.random() < chanceCrit) {
+    const tirage = Math.random();
+    console.log(tirage);
+    if (tirage < chanceCrit) {
       return true;
     }
     return false;
