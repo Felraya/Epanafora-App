@@ -92,6 +92,7 @@
   },
   "customElements": "custom-elements.json",
   "pkg": {
+    "scripts": "dist/**/*",
     "assets": "dist/**/*"
   }
 }
