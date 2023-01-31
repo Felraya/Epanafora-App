@@ -202,6 +202,40 @@ export class CalculCombat extends LitElement {
 
   private static CHANCE_COUP_CRIT_BASE: number = 0.05;
 
+  firstUpdated() {
+    const nbIteration = 10000;
+
+    let somme1 = 0;
+    const crit1 = 0.15;
+    for (let index = 0; index < nbIteration; index += 1) {
+      if (CalculCombat.isCrit(crit1)) {
+        somme1 += 1;
+      }
+    }
+    const re1 = somme1 / nbIteration;
+    console.log('Attendu : ', crit1, '| Obtenu : ', re1);
+
+    let somme2 = 0;
+    const crit2 = 0.5;
+    for (let index = 0; index < nbIteration; index += 1) {
+      if (CalculCombat.isCrit(crit2)) {
+        somme2 += 1;
+      }
+    }
+    const re2 = somme2 / nbIteration;
+    console.log('Attendu : ', crit2, '| Obtenu : ', re2);
+
+    let somme3 = 0;
+    const crit3 = 0.75;
+    for (let index = 0; index < nbIteration; index += 1) {
+      if (CalculCombat.isCrit(crit3)) {
+        somme3 += 1;
+      }
+    }
+    const re3 = somme3 / nbIteration;
+    console.log('Attendu : ', crit3, '| Obtenu : ', re3);
+  }
+
   isArme(): boolean {
     if (!this.joueurTypeAttaque) {
       return true;
@@ -266,7 +300,6 @@ export class CalculCombat extends LitElement {
 
   static isCrit(chanceCrit: number): boolean {
     const tirage = Math.random();
-    console.log(tirage);
     if (tirage < chanceCrit) {
       return true;
     }
