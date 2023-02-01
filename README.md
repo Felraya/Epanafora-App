@@ -52,3 +52,8 @@ Attaque en symbiose (arme + pouvoir) :
 - dégat = [DE_PHYSIQUE] _ (1 + [DEGAT_ADDITIONEL_ARME]) + (0,5 _ [TIER_POUVOIR] \* [DE_ENERGIE])
 - chance de crit = [CHANCE_COUP_CRIT_BASE] + [CHANCE_COUP_CRIT_ARME] + (0,1 \* [TIER_POUVOIR])
 - conséquence négatif : l'arme perd 1 NP
+
+
+
+https://github.com/vercel/pkg/issues/245
+
