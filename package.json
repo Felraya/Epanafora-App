@@ -14,7 +14,7 @@
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
     "pkg": "npm run build && rimraf epanafora-pkg.exe && pkg . --target node14-win-x64 --output epanafora-pkg.exe",
-    "nexe": "nexe server.js -r \"./dist/**/*\" -o epanafora-nexe.exe --build"
+    "nexe": "rimraf epanafora-nexe.exe && nexe server.js -r \"./dist/**/*\" -o epanafora-nexe.exe --build"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.9.0",

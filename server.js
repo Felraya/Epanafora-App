@@ -1,13 +1,6 @@
 const liveServer = require('live-server');
-const fs = require('fs');
 
-fs.readFile('dist/index.html', 'utf-8', (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  console.log(data);
-});
+console.log("\nAslan est cringe !!!\n");
 
 const params = {
   port: 8181, // Set the server port. Defaults to 8080.
