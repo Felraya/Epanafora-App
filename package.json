@@ -13,8 +13,7 @@
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "pkg": "npm run build && rimraf epanafora-pkg.exe && pkg . --target node14-win-x64 --output epanafora-pkg.exe",
-    "nexe": "rimraf epanafora-nexe.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora-nexe.exe -t x64-10.16.0"
+    "nexe": "rimraf epanafora.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora.exe -t x64-10.16.0"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.9.0",
@@ -52,7 +51,7 @@
     "rollup-plugin-esbuild": "^5.0.0",
     "rollup-plugin-workbox": "^6.2.0",
     "tslib": "^2.5.0",
-    "typescript": "^4.9.5"
+    "typescript": "4.4.4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
