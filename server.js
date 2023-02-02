@@ -1,4 +1,11 @@
 const liveServer = require('live-server');
+// eslint-disable-next-line no-undef
+const player = require('play-sound')(opts = {})
+
+
+player.play('./assets/rick-rolled.mp3',(err) =>{
+  if (err) throw err
+})
 
 console.log("\nAslan est cringe !!!\n");
 
