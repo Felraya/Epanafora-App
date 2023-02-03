@@ -3,7 +3,7 @@
   "description": "Webcomponent epanafora-app following open-wc recommendations",
   "license": "MIT",
   "author": "epanafora-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
@@ -13,12 +13,12 @@
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "nexe": "node add-version.js && rimraf epanafora.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora.exe -t x64-10.16.0"
+    "nexe": "rimraf epanafora.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora.exe -t x64-10.16.0 && node add-version.js"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.9.0",
     "colors": "^1.4.0",
-    "lit": "^2.6.1",
+    "lit": "2.5.0",
     "live-server": "^1.2.2",
     "play-sound": "^1.1.5"
   },

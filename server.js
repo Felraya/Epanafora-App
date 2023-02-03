@@ -1,18 +1,25 @@
 const liveServer = require('live-server');
 // eslint-disable-next-line no-undef
-const player = require('play-sound')(opts = {})
+const player = require('play-sound')((opts = {}));
 const colors = require('colors/safe');
 const pjson = require('./package.json');
 
 // Version
 console.log(colors.red(`\nVersion : ${pjson.version}`));
 
-player.play('./assets/rick-rolled.mp3', { play: ['-v', 1 ]}, (err) =>{
-  if (err) throw err;
-})
+// Music
+try {
+  player.play('./assets/rick-rolled.mp3', err => {
+    if (err) throw err;
+  });
+} catch (error) {
+  console.log('Oh non ca bug');
+}
 
-console.log(colors.rainbow("\nAslan est cringe !!!\n"));
+// Message
+console.log(colors.rainbow('\nAslan est cringe !!!\n'));
 
+// Lancement server
 const params = {
   port: 8181, // Set the server port. Defaults to 8080.
   host: '0.0.0.0', // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.

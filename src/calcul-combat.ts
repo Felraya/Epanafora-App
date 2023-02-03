@@ -621,21 +621,21 @@ export class CalculCombat extends LitElement {
             <ui5-label>Dé Physique</ui5-label>
             <ui5-combobox placeholder="2D4" id="joueurDePysique" value="2D4">
               ${diceListe.map(
-                item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Instinct</ui5-label>
             <ui5-combobox placeholder="2D4" id="joueurDeInstinct" value="2D4">
               ${diceListe.map(
-                item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Energie</ui5-label>
             <ui5-combobox placeholder="2D4" id="joueurDeEnergie" value="2D4">
               ${diceListe.map(
-                item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
             <ui5-label>Type d'attaque</ui5-label>
@@ -709,14 +709,14 @@ export class CalculCombat extends LitElement {
             <ui5-label>Dé Physique</ui5-label>
             <ui5-combobox placeholder="2D4" id="ennemiDePysique" value="2D4">
               ${diceListe.map(
-                item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
             <ui5-label>Dé Instinct</ui5-label>
             <ui5-combobox placeholder="2D4" id="ennemiDeInstinct" value="2D4">
               ${diceListe.map(
-                item => html` <ui5-cb-item text=${item.dice}></ui5-cb-item> `
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
           </div>
