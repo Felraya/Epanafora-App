@@ -92,9 +92,5 @@
       "prettier --write"
     ]
   },
-  "customElements": "custom-elements.json",
-  "bin": "server.js",
-  "pkg": {
-    "assets": "dist/**/*"
-  }
+  "customElements": "custom-elements.json"
 }
