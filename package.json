@@ -13,7 +13,7 @@
     "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "nexe": "rimraf epanafora.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora.exe -t x64-10.16.0"
+    "nexe": "node add-version.js && rimraf epanafora.exe && nexe server.js -r \"./dist/**/*\" -r \"./assets/**/*\" -o epanafora.exe -t x64-10.16.0"
   },
   "dependencies": {
     "@ui5/webcomponents": "1.9.0",
@@ -23,6 +23,7 @@
     "play-sound": "^1.1.5"
   },
   "devDependencies": {
+    "semver": "^7.3.8",
     "@babel/preset-env": "^7.16.4",
     "@custom-elements-manifest/analyzer": "^0.4.17",
     "@open-wc/building-rollup": "^2.0.2",
