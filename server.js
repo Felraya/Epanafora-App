@@ -8,7 +8,7 @@ const pjson = require('./package.json');
 console.log(colors.red(`\nVersion : ${pjson.version}`));
 
 player.play('./assets/rick-rolled.mp3', { play: ['-v', 1 ]}, (err) =>{
-  if (err) throw err
+  if (err) throw err;
 })
 
 console.log(colors.rainbow("\nAslan est cringe !!!\n"));
