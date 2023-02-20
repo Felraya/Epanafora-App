@@ -610,6 +610,9 @@ export class CalculCombat extends LitElement {
     this.crit = false;
     this.toucheResEnnemie.innerText = '';
     this.degatResEnnemie.innerText = '0';
+
+    this.degatResEnnemie.style.color = '';
+    this.degatResJoueur.style.color = '';
   }
 
   render() {

@@ -1,20 +1,9 @@
 const liveServer = require('live-server');
-// eslint-disable-next-line no-undef
-const player = require('play-sound')((opts = {}));
 const colors = require('colors/safe');
 const pjson = require('./package.json');
 
 // Version
 console.log(colors.red(`\nVersion : ${pjson.version}`));
-
-// Music
-try {
-  player.play('./assets/rick-rolled.mp3', err => {
-    if (err) throw err;
-  });
-} catch (error) {
-  console.log('Oh non ca bug');
-}
 
 // Message
 console.log(colors.rainbow('\nAslan est cringe !!!\n'));
