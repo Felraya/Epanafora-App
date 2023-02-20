@@ -7,9 +7,6 @@ import '@ui5/webcomponents/dist/Button.js';
 import '@ui5/webcomponents/dist/TabContainer.js';
 import '@ui5/webcomponents/dist/Tab.js';
 
-// eslint-disable-next-line
-// const background = new URL('../../assets/background.png', import.meta.url).href;
-
 @customElement('epanafora-app')
 export class EpanaforaApp extends LitElement {
   static styles = css`
@@ -21,7 +18,9 @@ export class EpanaforaApp extends LitElement {
       --sapFontSize: 16px;
     }
     ui5-tabcontainer::part(content) {
-      background-image: url('/assets/background.png');
+      background-image: url('https://cdna.artstation.com/p/assets/images/images/001/206/348/4k/david-edwards-kenden-001.jpg?1442195813');
+      background-repeat: no-repeat;
+      background-size: cover;
       height: 100%;
       --_ui5_tc_content_border_bottom: 0;
     }

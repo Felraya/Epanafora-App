@@ -23,7 +23,7 @@ export class EasterEgg extends LitElement {
     const audio: HTMLAudioElement = this.shadowRoot!.getElementById(
       'audio'
     )! as HTMLAudioElement;
-    audio.volume = 0.02;
+    audio.volume = 0.05;
   }
 
   render() {
