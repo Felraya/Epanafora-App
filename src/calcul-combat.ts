@@ -4,7 +4,6 @@ import '@ui5/webcomponents/dist/Button.js';
 import '@ui5/webcomponents/dist/Input.js';
 import '@ui5/webcomponents/dist/ComboBox.js';
 import '@ui5/webcomponents/dist/Select.js';
-import '@ui5/webcomponents/dist/Title.js';
 // import { Dice } from './Dice.js';
 import { diceListe, degatArme, txCritArme } from './data.js';
 import { Dice } from './Dice.js';
@@ -117,7 +116,12 @@ export class CalculCombat extends LitElement {
     .title {
       font-size: 20px;
       font-weight: bold;
-      color: #323232;
+      color: #181818;
+    }
+    .label {
+      font-size: 16px;
+      color: #565656;
+      white-space: nowrap;
     }
     .card {
       display: flex;
@@ -619,29 +623,24 @@ export class CalculCombat extends LitElement {
     return html`
       <div class="body">
         <div class="player">
-          <ui5-title level="H2">Joueur</ui5-title>
+          <h2>Joueur</h2>
           <div class="form">
-            <ui5-label>Dé Physique</ui5-label>
+            <span class="label">Dé Physique</span>
             <ui5-combobox placeholder="2D4" id="joueurDePysique" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
-            <ui5-label>Dé Instinct</ui5-label>
+            <span class="label">Dé Instinct</span>
             <ui5-combobox placeholder="2D4" id="joueurDeInstinct" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
-            <ui5-label>Dé Energie</ui5-label>
-            <ui5-combobox placeholder="2D4" id="joueurDeEnergie" value="2D4">
-              ${diceListe.map(
-                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
-              )}
-            </ui5-combobox>
-            <ui5-label>Type d'attaque</ui5-label>
+            <span class="label">Dé Energie</span>
+            <span class="label">Type d'attaque</span>
             <ui5-select
               id="joueurTypeAttaque"
               @change=${() => this.requestUpdate()}
@@ -652,7 +651,7 @@ export class CalculCombat extends LitElement {
               <ui5-option>Symbiose</ui5-option>
             </ui5-select>
 
-            <ui5-label>Tier du sort</ui5-label>
+            <span class="label">Tier du sort</span>
             <ui5-select ?disabled=${this.isPouvoir()} id="joueurTierPouvoir">
               <ui5-option>1</ui5-option>
               <ui5-option>2</ui5-option>
@@ -661,14 +660,14 @@ export class CalculCombat extends LitElement {
               <ui5-option>5</ui5-option>
             </ui5-select>
 
-            <ui5-label>Degats de l'arme</ui5-label>
+            <span class="label">Degats de l'arme</span>
             <ui5-select ?disabled=${this.isArme()} id="joueurDegatsArme">
               ${degatArme.map(
                 item => html` <ui5-option>${item}%</ui5-option> `
               )}
             </ui5-select>
 
-            <ui5-label>Taux critique arme</ui5-label>
+            <span class="label">Taux critique arme</span>
             <ui5-select ?disabled=${this.isArme()} id="joueurCritsArme">
               ${txCritArme.map(
                 item => html` <ui5-option>${item}%</ui5-option> `
@@ -707,16 +706,16 @@ export class CalculCombat extends LitElement {
         </div>
 
         <div class="ennemi">
-          <ui5-title level="H2">Ennemi</ui5-title>
+          <h2>Ennemi</h2>
           <div class="form">
-            <ui5-label>Dé Physique</ui5-label>
+            <span class="label">Dé Physique</span>
             <ui5-combobox placeholder="2D4" id="ennemiDePysique" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
               )}
             </ui5-combobox>
 
-            <ui5-label>Dé Instinct</ui5-label>
+            <span class="label">Dé Instinct</span>
             <ui5-combobox placeholder="2D4" id="ennemiDeInstinct" value="2D4">
               ${diceListe.map(
                 item => html` <ui5-cb-item text=${item}></ui5-cb-item> `

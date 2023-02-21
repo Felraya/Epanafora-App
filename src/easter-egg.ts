@@ -2,8 +2,6 @@ import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import '@ui5/webcomponents/dist/Button.js';
 
-const rickRoll = new URL('../../assets/rick-rolled.mp3', import.meta.url).href;
-
 @customElement('easter-egg')
 export class EasterEgg extends LitElement {
   static styles = css`
@@ -15,7 +13,7 @@ export class EasterEgg extends LitElement {
     span.title {
       font-size: 32px;
       font-weight: bold;
-      color: #8a1b0c;
+      color: #d50a0a;
     }
   `;
 
@@ -28,6 +26,10 @@ export class EasterEgg extends LitElement {
 
   render() {
     return html` <span class="title">Charilor > Fika</span>
-      <audio id="audio" controls src=${rickRoll}></audio>`;
+      <audio
+        id="audio"
+        controls
+        src="https://www.cjoint.com/doc/16_09/FIsxS52QXY7_Rick-Astley---Never-Gonna-Give-You-Up.mp3"
+      ></audio>`;
   }
 }
