@@ -15,25 +15,6 @@ export class CalculCombat extends LitElement {
       display: flex;
       flex-direction: column;
       row-gap: 64px;
-
-      --green-light: #f5fae5;
-      --green: #30914c;
-      --green-dark: #287a40;
-
-      --blue-light: #e1f4ff;
-      --blue: #0070f2;
-      --blue-dark: #0058bf;
-
-      --orange-light: #fff8d6;
-      --orange: #e76500;
-      --orange-dark: #d35c00;
-
-      --red-light: #ffeaf4;
-      --red: #f53232;
-      --red-dark: #d50a0a;
-
-      --grey: #6a6d70;
-      --grey-dark: #515456;
     }
     .body {
       display: flex;
@@ -640,6 +621,12 @@ export class CalculCombat extends LitElement {
             </ui5-combobox>
 
             <span class="label">Dé Energie</span>
+            <ui5-combobox placeholder="2D4" id="joueurDeEnergie" value="2D4">
+              ${diceListe.map(
+                item => html` <ui5-cb-item text=${item}></ui5-cb-item> `
+              )}
+            </ui5-combobox>
+
             <span class="label">Type d'attaque</span>
             <ui5-select
               id="joueurTypeAttaque"
