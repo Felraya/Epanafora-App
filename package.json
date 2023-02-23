@@ -3,7 +3,7 @@
   "description": "Webcomponent epanafora-app following open-wc recommendations",
   "license": "MIT",
   "author": "epanafora-app",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",

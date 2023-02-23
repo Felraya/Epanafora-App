@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { property, query, customElement } from 'lit/decorators.js';
+import { query, customElement } from 'lit/decorators.js';
 import '@ui5/webcomponents/dist/Button.js';
 import { txCompetence } from './data.js';
 
@@ -50,6 +50,7 @@ export class CalculCompetence extends LitElement {
       align-items: center;
       justify-content: space-around;
       color: #323232;
+      text-align: center;
     }
     #resCompetenceScore {
       background-color: var(--blue-light);
@@ -64,8 +65,6 @@ export class CalculCompetence extends LitElement {
     }
   `;
 
-  @property({ attribute: false }) scoreRoll: number = 0;
-
   @query('#joueurCompetence') joueurCompetence!: any;
 
   @query('#resCompetenceScore') resCompetenceScore!: any;
@@ -73,37 +72,30 @@ export class CalculCompetence extends LitElement {
   @query('#resCompetenceTexte') resCompetenceTexte!: any;
 
   calculCompetence() {
-    const chanceReussite = CalculCompetence.percentToNumber(
-      this.joueurCompetence.selectedOption.innerText
-    );
+    const min = 1;
+    const max = 100;
+
+    const tirage = min + Math.floor(Math.random() * max);
+    console.log(tirage);
+    const chanceReussite = +this.joueurCompetence.selectedOption.innerText;
+
+    console.log(chanceReussite);
 
     let res: string;
-    if (this.rollCompetence(chanceReussite)) {
-      res = 'Réussi';
+    if (tirage <= chanceReussite && tirage !== max) {
+      res = 'Réussite';
+      if (tirage <= 5) {
+        res = 'Réussite critique';
+      }
     } else {
-      res = 'Loupé';
+      res = 'Échec';
+      if (tirage >= 96) {
+        res = 'Échec critique';
+      }
     }
 
-    this.resCompetenceScore.innerText = Math.ceil(this.scoreRoll * 100);
+    this.resCompetenceScore.innerText = tirage;
     this.resCompetenceTexte.innerText = `${res}`;
-  }
-
-  rollCompetence(chanceReussite: number): boolean {
-    const tirage = Math.random();
-    this.scoreRoll = tirage;
-    if (this.scoreRoll < chanceReussite) {
-      return true;
-    }
-    return false;
-  }
-
-  static percentToNumber(percent: string): number {
-    const regex = /[0-9]*%/;
-    if (!percent.match(regex)) {
-      console.error('Format pourcentage incorrect !!!');
-    }
-    const percentNumber = +percent.substring(0, percent.length - 1);
-    return percentNumber / 100;
   }
 
   render() {
